@@ -22,7 +22,7 @@ public class CRFC {
     *
     * */
 
-    public static void generarRFC(String nombre, String prim_ap, String seg_ap, String fecha){
+    public static void obtenerDatos(String nombre, String prim_ap, String seg_ap, String fecha, String sexo, String cv_estado){
         String salida;
         //Validation: nombre (No vacío, No menos de una letra)
         if (nombre.isBlank() || nombre.length() < 2) {
@@ -48,7 +48,7 @@ public class CRFC {
 
         curp = salida;
 
-        salida += genClave(); //Generación de Homoclave
+        salida += genHomoClave(); //Generación de Homoclave
         
         rfc = salida;
     }
@@ -110,16 +110,21 @@ public class CRFC {
         return salida;
     }
 
-    private static String genClave(){
+    private static String genHomoClave(){
         String salida = "";
-        String clave = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        Random rnd = new Random();
-
-        salida += clave.charAt(rnd.nextInt(clave.length()));
-        salida += clave.charAt(rnd.nextInt(clave.length()));
-        salida += clave.charAt(rnd.nextInt(clave.length()));
+        
+        for (int i = 0; i < 3; i++) {
+            salida += getCharRand();
+        }
 
         return salida;
+    }
+
+    private static String getCharRand(){
+        String clave = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        Random rnd = new Random();
+        
+        return Character.toString(clave.charAt(rnd.nextInt(clave.length())));
     }
 
     private static String checkInicial(final String target) {
